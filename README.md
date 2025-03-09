@@ -15,8 +15,9 @@
 - Arch linux: ```yay -S python311```
 - Ubuntu: ```sudo apt install python3.11```
 
-Следущий шаг это настройка файла **config.ini**:
+Следущий шаг это настройка файла **config.ini TEMPLATE**:
 
+- Переименуйте на ```config.ini```
 - Вам нужно достать 2 токены юзеров из nekto.me/chat.
     - Откоройте вкладку инкогнито, перейдите на этот [сайт](https://nekto.me/chat). Откройте консоль и введите: ```JSON.parse(localStorage.getItem("storage_v2"))["user"]["authToken"]```
     - Пообщайтесь 5-10 раз для того чтобы система nekto.me поняла что вы не бот.
