@@ -1,6 +1,6 @@
 import asyncio
 from client import Client
-from dispatcher import Notice, MessagesNewEvent, DialogClosedEvent, DialogOpenedEvent
+from dispatcher import Notice, MessagesNewEvent, DialogClosedEvent, DialogOpenedEvent, DialogInfoEvent
 from mixins.client import SendAnonMessageAction, MessagesReadAction, LeaveDialogAction
 from utils import generate_random_id
 
@@ -12,13 +12,13 @@ class MITM:
     async def start(self) -> None:
         await asyncio.gather(*[client.start() for client in self.clients])
 
-    async def on_dialog_opened(self, _: Client, notice: Notice) -> None:
-        interlocutors = notice.data["interlocutors"]
-        for client in self.clients:
-            if client.user_data["id"] not in interlocutors:
-                break
-        else:
-            await client.send_action(LeaveDialogAction(dialogId=notice.data["id"]))
+    async def on_dialog_opened(self, client: Client, _: Notice) -> None:
+        for other_client in self.clients:
+            if other_client == client:
+                continue
+            if hasattr(other_client, "dialog"):
+                if other_client.dialog["id"] == client.dialog["id"]:
+                    await other_client.send_action(LeaveDialogAction(dialogId=other_client.dialog["id"]))
 
     async def on_message(self, _: Client, notice: Notice) -> None:
         sender = notice.data["senderId"]
@@ -51,5 +51,6 @@ class MITM:
         client.dispatcher.add_event(MessagesNewEvent, self.on_message)
         client.dispatcher.add_event(DialogClosedEvent, self.on_dialog_close)
         client.dispatcher.add_event(DialogOpenedEvent, self.on_dialog_opened)
+        client.dispatcher.add_event(DialogInfoEvent, self.on_dialog_opened)
         self.clients.append(client)
         
