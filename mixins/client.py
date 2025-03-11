@@ -1,13 +1,11 @@
-from typing import Union, Optional
+from typing import Union, Optional, Any
 from dataclasses import dataclass
 
 import json
 
-class BaseAction:
-    action: str = None
-
 @dataclass
-class SendTokenAction(BaseAction):
+class SendTokenAction:
+    action: str
     token: str
     t: int
     action: str = "auth.sendToken"
@@ -65,6 +63,6 @@ class ClientSendMixin:
             raise ValueError("Client is not connected! Please connect client: .start()")
         await self.ws.send(message)
 
-    async def send_action(self, action: BaseAction) -> None:
+    async def send_action(self, action: Any) -> None:
         payload = ["action", {k: v for k, v in action.__dict__.items() if v != "pass"}]
         await self.send("42" + json.dumps(payload))

@@ -40,7 +40,7 @@ class Client(ClientSendMixin):
 
     async def on_error(self, _: Self, notice: Notice) -> None:
         if notice.data["id"] == 400:
-            return print(f"Warning: {self.name} - неверная webagent... Skipped...")
+            return print(f"Warning: {self.name} - неверный webagent.")
         raise NektoMeException(notice.data["description"])
 
     async def on_ready(self, client: Self, _: Notice) -> None:
