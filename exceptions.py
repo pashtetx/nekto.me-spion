@@ -1,0 +1,3 @@
+
+class NektoMeException(Exception):
+    pass

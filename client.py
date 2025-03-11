@@ -15,6 +15,8 @@ from typing import Self
 
 from mixins.client import ClientSendMixin, SendTokenAction, SearchRunAction
 
+from exceptions import NektoMeException
+
 import math
 import time
 import asyncio
@@ -22,11 +24,12 @@ import asyncio
 class Client(ClientSendMixin):
     ws_addr: str = "wss://im.nekto.me/socket.io/?EIO=3&transport=websocket"
 
-    def __init__(self, token: str, ua: str = None, search_criteries: SearchRunAction = None):
+    def __init__(self, token: str, ua: str = None, name: str = None, search_criteries: SearchRunAction = None):
         self.dispatcher = Dispatcher(self)
         self.ua = ua
         self.search_criteries = search_criteries or SearchRunAction()
-        print(f"{token[:6]} - параметры поиска: ", self.search_criteries)
+        self.name = name or token[:6]
+        print(f"{self.name} - параметры поиска: ", self.search_criteries)
         self.token = token
         self.dispatcher.add_event(DialogOpenedEvent, self.set_dialog)
         self.dispatcher.add_event(AuthSuccessTokenEvent, self.set_user_data)
@@ -37,8 +40,8 @@ class Client(ClientSendMixin):
 
     async def on_error(self, _: Self, notice: Notice) -> None:
         if notice.data["id"] == 400:
-            return print(f"Warning: {self.token[:6]} - неверная webagent... Skipped...")
-        raise RuntimeError(notice.data["description"])
+            return print(f"Warning: {self.name} - неверная webagent... Skipped...")
+        raise NektoMeException(notice.data["description"])
 
     async def on_ready(self, client: Self, _: Notice) -> None:
         token = self.token

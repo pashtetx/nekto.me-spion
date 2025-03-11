@@ -20,11 +20,11 @@ class MITM:
                 if other_client.dialog["id"] == client.dialog["id"]:
                     await other_client.send_action(LeaveDialogAction(dialogId=other_client.dialog["id"]))
 
-    async def on_message(self, _: Client, notice: Notice) -> None:
+    async def on_message(self, client: Client, notice: Notice) -> None:
         sender = notice.data["senderId"]
         message = notice.data["message"]
         if sender not in list([client.user_data["id"] for client in self.clients]):
-            print(f"{sender}: {message}")
+            print(f"({client.name}) {sender}: {message}")
         for other_client in self.clients:
             if other_client.user_data["id"] == sender:
                 return
@@ -40,7 +40,7 @@ class MITM:
                 await other_client.send_action(SendAnonMessageAction(dialogId=dialog_id, randomId=random_id, message=message))
 
     async def on_dialog_close(self, client: Client, _: Notice) -> None:
-        print("Закрываю старый чат... ")
+        print(f"{client.name} - Закрываю старый чат... ")
         for other_client in self.clients:
             if other_client == client:
                 continue

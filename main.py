@@ -17,20 +17,20 @@ async def on_auth(client: Client, event: Notice) -> None:
     token = event.data["tokenInfo"]["authToken"]
     user_id = event.data["id"]
     create_time = event.data["tokenInfo"]["createTime"]
-    print(f"{client.token[:6]} - успешно авторизировался! user_id={user_id}, create_time={create_time}")
+    print(f"{client.name} - успешно авторизировался! user_id={user_id}, create_time={create_time}")
     webagent = generate_webagent(token=token, user_id=user_id, create_time=create_time)
     await client.send_action(WebAgentAction(data=webagent))
-    print(f"{client.token[:6]} - успешно отправлен WebAgent! webagent={webagent}")
+    print(f"{client.name} - успешно отправлен WebAgent! webagent={webagent}")
     dialog_id = event.data["statusInfo"].get("anonDialogId")
     if dialog_id:
-        print(f"{client.token[:6]} - уже имеет активный диалог! dialog_id={dialog_id}")
+        print(f"{client.name} - уже имеет активный диалог! dialog_id={dialog_id}")
         await client.send_action(DialogInfoAction(dialogId=dialog_id))
     else:
         await client.send_action(client.search_criteries)
 
 async def on_dialog_opened(client: Client, _: Notice) -> None:
     dialog = client.dialog
-    print(f"{client.token[:6]} - нашел новый чат! dialog_id={dialog.get('id')}")
+    print(f"{client.name} - нашел новый чат! dialog_id={dialog.get('id')}")
 
 async def on_closed_dialog(client: Client, _: Notice) -> None:
     await client.send_action(client.search_criteries)
@@ -57,7 +57,7 @@ for client_name in clients:
     )
     if role: search_criteries.role = role
     if is_adult: search_criteries.isAdult = is_adult
-    client = Client(token=token, ua=ua, search_criteries=search_criteries)
+    client = Client(name=client_name, token=token, ua=ua, search_criteries=search_criteries)
     client.dispatcher.add_event(AuthSuccessTokenEvent, on_auth)
     client.dispatcher.add_event(DialogOpenedEvent, on_dialog_opened)
     client.dispatcher.add_event(DialogClosedEvent, on_closed_dialog)
