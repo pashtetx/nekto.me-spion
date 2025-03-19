@@ -5,7 +5,6 @@ import json
 
 @dataclass
 class SendTokenAction:
-    action: str
     token: str
     t: int
     action: str = "auth.sendToken"

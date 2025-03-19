@@ -1,18 +1,10 @@
 [settings]
-clients=client_name client_name2
+clients=nekto-me-client-1 nekto-me-client-2
 
-[client/client_name]
-token=your token 1
-ua=User Agent from token
-my-sex=F
-my-age=0,17
-wish-sex=M
-wish-age=0,17
+[client/nekto-me-client-1]
+token=your 1 token
+ua=ua from your browser
 
-[client/client_name2]
-token=your token 1
-ua=User Agent from token
-my-sex=M
-my-age=0,17
-wish-sex=F
-wish-age=0,17
+[client/nekto-me-client-2]
+token=your 2 token
+ua=ua from your browser

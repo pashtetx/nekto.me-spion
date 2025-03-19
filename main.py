@@ -50,10 +50,10 @@ for client_name in clients:
     is_adult = config.getboolean(name, "is-adult", fallback=None)
     role = config.getboolean(name, "role", fallback=None)
     search_criteries = SearchRunAction(
-        myAge=list(map(lambda i: int(i), my_age.split(","))),
-        mySex=my_sex,
-        wishSex=wish_sex,
-        wishAge=list(map(lambda i: list(map(lambda j: int(j), i.split(","))), wish_age.split(" "))),
+        myAge=list(map(lambda i: int(i), my_age.split(","))) if my_age else "pass",
+        mySex=my_sex if my_sex else "pass",
+        wishSex=wish_sex if wish_sex else "pass",
+        wishAge=list(map(lambda i: list(map(lambda j: int(j), i.split(","))), wish_age.split(" "))) if wish_age else "pass",
     )
     if role: search_criteries.role = role
     if is_adult: search_criteries.isAdult = is_adult
