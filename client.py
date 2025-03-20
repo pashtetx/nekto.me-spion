@@ -38,6 +38,8 @@ class Client(ClientSendMixin):
         self.dispatcher.add_event(ReadyEvent, self.on_ready)
         self.dispatcher.add_event(ErrorCodeEvent, self.on_error)
 
+    
+
     async def on_error(self, _: Self, notice: Notice) -> None:
         if notice.data["id"] == 400:
             return print(f"Warning: {self.name} - неверный webagent.")

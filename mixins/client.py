@@ -1,6 +1,8 @@
 from typing import Union, Optional, Any
 from dataclasses import dataclass
 
+from utils import generate_random_id
+
 import json
 
 @dataclass
@@ -65,3 +67,10 @@ class ClientSendMixin:
     async def send_action(self, action: Any) -> None:
         payload = ["action", {k: v for k, v in action.__dict__.items() if v != "pass"}]
         await self.send("42" + json.dumps(payload))
+
+    async def send_message(self, content: str) -> None:
+        random_id = generate_random_id() 
+        dialog_id = self.dialog["id"]
+        payload = SendAnonMessageAction(message=content, randomId=random_id, dialogId=dialog_id)
+        await self.send_action(payload)
+
