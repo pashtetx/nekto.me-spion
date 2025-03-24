@@ -7,6 +7,10 @@
 ---
 Шпион написан на [Python 3.11](https://www.python.org/downloads/release/python-3110/) и использует [асинхронность](https://docs.python.org/3/library/asyncio.html) что позволяет запускать 2 клиентов одновременно. Он использует библиотеку [websockets](https://websockets.readthedocs.io/en/stable/index.html), которая дает возможность асинхронного подключения к вебсокетам.
 
+### Принцип работы
+
+< Собеседник 1 > <-> < Клиент 1 > <-> < ВЫ > <-> < Клиент 2 > <-> < Собеседник 2 >
+
 ### Запуск
 
 Чтобы запустить бота вам нужно установить на свое устройство. Чтобы установить на windows перейдите по ссылке: [Python 3.11 (Windows).](https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64.exe)
