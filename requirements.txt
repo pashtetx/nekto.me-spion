@@ -1,2 +1,2 @@
-websockets
-aiohttp
+python-socketio==5.0.4
+structlog==25.4.0

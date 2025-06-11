@@ -1,23 +1,27 @@
-# Spion anonymous chat by nekto.me
+![text](./nektome-logo.png)
 
 <div align="center">
-    <i>Шпион для анонимного чата nekto.me, на базе вебсокетов</i>
+    <i><b>Шпион для анонимного чата nekto.me, на базе socketio</b></i>
 </div>
 
 ---
-Шпион написан на [Python 3.11](https://www.python.org/downloads/release/python-3110/) и использует [асинхронность](https://docs.python.org/3/library/asyncio.html) что позволяет запускать 2 клиентов одновременно. Он использует библиотеку [websockets](https://websockets.readthedocs.io/en/stable/index.html), которая дает возможность асинхронного подключения к вебсокетам.
+Шпион написан на [Python 3.12](https://www.python.org/downloads/release/python-3110/) и использует [асинхронность](https://docs.python.org/3/library/asyncio.html) что позволяет запускать 2 или больше клиентов одновременно. Он использует библиотеку [python-socketio](https://python-socketio.readthedocs.io/en/latest/index.html), которая дает возможность асинхронного подключения к socketio серверу.
 
 ### Принцип работы
 
+Этот шипион работает по принципу атаки MITM (man in the middle). Вот как выглядит это:
+
 < Собеседник 1 > <-> < Клиент 1 > <-> < ВЫ > <-> < Клиент 2 > <-> < Собеседник 2 >
+
+Вы просто перенаправляете сообщения с одного чата на другой.
 
 ### Запуск
 
-Чтобы запустить бота вам нужно установить на свое устройство. Чтобы установить на windows перейдите по ссылке: [Python 3.11 (Windows).](https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64.exe)
+Чтобы запустить бота вам нужно установить на свое устройство. Чтобы установить на windows перейдите по ссылке: [Python 3.12 (Windows).](https://www.python.org/ftp/python/3.12.0/python-3.12.0-embed-amd64.zip)
 
 Чтобы установить на линукс:
-- Arch linux: ```yay -S python311```
-- Ubuntu: ```sudo apt install python3.11```
+- Arch linux: ```yay -S python312```
+- Ubuntu: ```sudo apt install python3.12```
 
 Следущий шаг это настройка файла **config.ini TEMPLATE**:
 
@@ -35,17 +39,15 @@
 | Название    | Значение            | Пример            |
 | ----------- | -----------         | ---------         |
 | my-sex      | Пол клиента         | M или F           |
-| my-age      | Возраст клиента     | 0,17; 18,25       |
+| my-age      | Возраст клиента     | 0,17 или 18,21      |
 | wish-sex    | Пол собеседника     | M или F           |
-| wish-age    | Возраст собеседника | 0,17; 0,17 18 21  |
+| wish-age    | Возраст собеседника | 0,17 или 0,17-18,21 (если несколько)  |
 | is-adult    | 18+ чат             | True или False    |
 | role        | Ролка               | True или False    |
+| wish-role   | Ищу сюжет или Предлагаю | suggest или search |
 
 > Подсказка: M - это парень, F - это девушка
-
-### TODO List
-
-    1. Buffer для сообщений в том случае если другой клиент еще не нашел собеседника
+> Подсказка: Suggest - предлагать сюжет, Search - искать сюжет
 
 ### Мой телеграм канал
-У меня есть свой телеграм канал: t.me/progerfromselo 
+*Если у вас есть вопросы пишите в телеграм канал*: t.me/progerfromselo 
