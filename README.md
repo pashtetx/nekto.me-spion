@@ -1,6 +1,7 @@
-![text](./nektome-logo.png)
+
 
 <div align="center">
+    <img src="./nektome-logo.png"></br>
     <i><b>Шпион для анонимного чата nekto.me, на базе socketio</b></i>
 </div>
 
