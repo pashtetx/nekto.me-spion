@@ -1,5 +1,6 @@
 [settings]
 clients=nekto-me-client-1 nekto-me-client-2
+debug=False
 
 [client/nekto-me-client-1]
 token=your 1 token

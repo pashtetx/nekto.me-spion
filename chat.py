@@ -64,7 +64,7 @@ class Chat(BaseChat):
                 "dialogId":client.dialog_id
             }
             log.debug("Client close current dialog!")
-            await client.emit(
+            return await client.emit(
                 "action",
                 data=payload, 
             )
