@@ -11,7 +11,7 @@ def get_config(path: str = "config.ini") -> ConfigParser:
 
 def get_debug():
     config = get_config()
-    if config.getboolean("settings", "debug"):
+    if config.getboolean("settings", "debug", fallback=None):
         structlog.configure(wrapper_class=structlog.make_filtering_bound_logger(logging.DEBUG))
     else:
         structlog.configure(wrapper_class=structlog.make_filtering_bound_logger(logging.WARNING))
