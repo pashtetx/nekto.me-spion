@@ -5,7 +5,19 @@ debug=False
 [client/nekto-me-client-1]
 token=your 1 token
 ua=ua from your browser
+age=26,35
+wish-age=0,17
+sex=False
+wish-sex=M
+role=False
+adult=True
 
 [client/nekto-me-client-2]
 token=your 2 token
 ua=ua from your browser
+age=0,17
+wish-age=0,17-18,21
+sex=M
+wish-sex=F
+role=False
+adult=False
