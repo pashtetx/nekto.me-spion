@@ -1,6 +1,7 @@
 from socketio import AsyncClient
 
 from typing import Callable, Dict, Any, List, Self, Literal
+from utils import generate_webagent
 
 import structlog
 import time
@@ -85,6 +86,12 @@ class Client(AsyncClient):
         setattr(self, "id", data.get("id"))
         dialog_id = data.get("statusInfo").get("anonDialogId")
         if dialog_id: setattr(self, "dialog_id", dialog_id)
+        payload = {
+            "type":"web-agent",
+            "data":generate_webagent(self.token, self.id, round(time.time() * 1000))
+        }
+        self.get_logger().debug("Sending web-agent", payload=payload)
+        await self.emit("action", data=payload)
 
     async def on_connect(self) -> None:
         self.get_logger().debug(f"User has connected!")
